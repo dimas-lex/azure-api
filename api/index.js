@@ -1,3 +1,5 @@
+import {v4 as uuidv4} from 'uuid';
+
 module.exports = async function (context, req) {
     context.log('HTTP trigger function processed a request.');
     context.log({

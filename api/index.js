@@ -1,5 +1,8 @@
 module.exports = async function (context, req) {
     context.log('HTTP trigger function processed a request.');
+    context.log({
+        query: req.query
+    });
     const key = req.query.key;
     const quantity = parseInt(req.query.quantity, 10);
 

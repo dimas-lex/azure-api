@@ -1,13 +1,37 @@
 module.exports = async function (context, req) {
-    context.log('JavaScript HTTP trigger function processed a request.');
+    context.log('HTTP trigger function processed a request.');
+    const key = req.query.key;
+    const quantity = parseInt(req.query.quantity, 10);
 
-    const name = (req.query.name || (req.body && req.body.name));
-    const responseMessage = name
-        ? "Hello, my friend" + name + ". This HTTP triggered function executed successfully."
-        : "This HTTP triggered function executed successfully. Pass a name in the query string or in the request body for a personalized response.";
+    if ( key !== '123' || !quantity || isNaN(quantity) || quantity < 0) {
+
+        context.res = {
+            status: 500, /* Defaults to 200 */
+            body: "Ooops",
+        };
+        return;
+    }
+
+    const tmpArr = new Array(quantity).fill('');
+
+    const dataArr = tmpArr.map((_, indx) => {
+        const value = Math.floor(Math.random() * 10000) / 10;
+
+        return {
+            id: `id_${indx}`,
+            name: `name_${indx}`,
+            betaId: uuidv4(),
+            value,
+            currency: (value % 2 === 0) ? "USD" : "EURO",
+            timestamp: Date.now()
+        }
+    })
+
 
     context.res = {
         // status: 200, /* Defaults to 200 */
-        body: responseMessage
+        body: { data: dataArr, quantity },
+
     };
+    return;
 }

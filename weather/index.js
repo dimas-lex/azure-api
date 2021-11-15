@@ -14,7 +14,6 @@ module.exports = async function (context, req) {
     const city = req.query.city;
 
     if (key !== '123' || !country || !city) {
-
         context.res = {
             status: 500, /* Defaults to 200 */
             body: { success: false, error: "Ooops" },
@@ -22,14 +21,11 @@ module.exports = async function (context, req) {
         return;
     }
 
-
     const response = await fetch(`https://api.weatherbit.io/v2.0/current?city=${city}&country=${country}&key=${secret}`);
     const data = await response.json();
 
-    console.log(data);
-
     context.res = {
-        body: { success: true, data: data },
+        body: { success: true, ...data },
     };
     return;
 }

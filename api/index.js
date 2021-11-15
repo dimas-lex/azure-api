@@ -11,8 +11,8 @@ module.exports = async function (context, req) {
     if ( key !== '123' || !quantity || isNaN(quantity) || quantity < 0) {
 
         context.res = {
-            status: 500, /* Defaults to 200 */
-            body: "Ooops",
+            status: 500,
+            body: { success: false, error: "Ooops" },
         };
         return;
     }
@@ -35,7 +35,7 @@ module.exports = async function (context, req) {
 
     context.res = {
         // status: 200, /* Defaults to 200 */
-        body: { data: dataArr, quantity },
+        body: { success: true, data: dataArr, quantity },
 
     };
     return;
